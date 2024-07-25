@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>The Golden Dragon</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,5 +14,6 @@
     </head>
     <body id="app">
         <example-component></example-component>
+        <!-- <h1>Gouden Draak</h1> -->
     </body>
 </html>
