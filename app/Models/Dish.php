@@ -9,7 +9,7 @@ class Dish extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'dish_id','name','description','price'];
+    protected $fillable = [ 'id','category_id','name','description','price'];
     public function category(){
         return $this->belongsTo(Category::class);
     }
