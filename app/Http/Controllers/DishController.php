@@ -4,17 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Dish;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class DishController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) : Response
     {
-        $dishes = Dish::all();
-        return $dishes;
-        // return view('dishes.create',compact('dishes'));
+        // $filter = "";
+        // $filterRequest = $request->input('filter');
+
+        // dd($filterRequest);
+
+        // if(isset($filterRequest)){
+        //     $filter = $filterRequest;
+        // }
+
+        // $dishItems = Dish::all();
+
+        $filter = $request->input('filter', '');
+
+        $dishItems = Dish::query()
+            ->when($filter, function ($query, $filter) {
+                return $query->where('name', 'like', "%{$filter}%")
+                    ->orWhere('description', 'like', "%{$filter}%");
+            })
+            ->get();
+
+        return Inertia::render('Dishes/Index', [
+            'dishes' => $dishItems,
+            'filter' => '',
+        ]);
     }
 
     /**
@@ -22,7 +45,7 @@ class DishController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dishes/Create');
     }
 
     /**
