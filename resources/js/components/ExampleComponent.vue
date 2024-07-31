@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Hello from Vue.js Component</h1>
+        <h1>Gouden draak</h1>
     </div>
 </template>
 
