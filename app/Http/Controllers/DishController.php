@@ -13,8 +13,8 @@ class DishController extends Controller
     public function index()
     {
         $dishes = Dish::all();
-        return $dishes;
-        // return view('dishes.create',compact('dishes'));
+        // return $dishes;
+        return view('dishes.index',compact('dishes'));
     }
 
     /**
