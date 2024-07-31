@@ -14,29 +14,18 @@ class DishController extends Controller
      */
     public function index(Request $request) : Response
     {
-        // $filter = "";
-        // $filterRequest = $request->input('filter');
-
-        // dd($filterRequest);
-
-        // if(isset($filterRequest)){
-        //     $filter = $filterRequest;
-        // }
-
-        // $dishItems = Dish::all();
-
-        $filter = $request->input('filter', '');
+        $search = $request->input('search');
 
         $dishItems = Dish::query()
-            ->when($filter, function ($query, $filter) {
-                return $query->where('name', 'like', "%{$filter}%")
-                    ->orWhere('description', 'like', "%{$filter}%");
+            ->when($search, function ($query, $search) {
+                    return $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
             })
             ->get();
 
         return Inertia::render('Dishes/Index', [
             'dishes' => $dishItems,
-            'filter' => '',
+            'search' => $search,
         ]);
     }
 

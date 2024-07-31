@@ -26,9 +26,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dishes', [DishController::class, 'index'])->name('dishes.index');
-Route::get('/dishes/create', [DishController::class, 'create'])->name('dishes.create');
-
-
 Route::resource('/dishes', DishController::class);
+
 Route::get('/menu/pdf', [MenuController::class, 'exportToPDF'])->name('menu.pdf');

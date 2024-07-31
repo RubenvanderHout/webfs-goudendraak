@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="text-2xl font-bold mb-4">Dishes</h1>
-        <input type="text" v-model="filter" @input="filterDishes" placeholder="Search dishes..."
+        <input type="text" v-model="search" placeholder="Search dishes..."
             class="mb-4 p-2 border rounded" />
         <table class="min-w-full bg-white">
             <thead>
@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="dish in filteredDishes" :key="dish.id">
+                <tr v-for="dish in dishes" :key="dish.id">
                     <td class="py-2">{{ dish.name }}</td>
                     <td class="py-2">{{ dish.description }}</td>
                 </tr>
@@ -24,39 +24,40 @@
 import { computed, ref, watch } from 'vue';
 import { router } from "@inertiajs/vue3"
 import { DishItem } from '@/Models/Dish';
+import throttle from "lodash/throttle";
+import { Inertia } from '@inertiajs/inertia';
 
 interface Props {
     dishes: DishItem[]
-    filter: string,
+    search: string | null,
 }
+
 
 const props = withDefaults(
     defineProps<Props>(),
     {
         dishes: () => [],
-        filter: ""
+        search: ""
     }
 );
 
-const filter = ref(props.filter)
-const dishes = ref(props.dishes);
+const search = ref(props.search);
+const dishes = ref(props.dishes)
 
-const filterDishes = () => {
-    router.get(route('dishes.index'), { data: filter.value }, {
+watch(search, throttle((searchItem) => {
+    Inertia.get("/dishes", { search: searchItem }, {
         preserveState: true,
         replace: true,
+        only: ['dishes'],
     });
-};
+    }, 1000)
+);
 
 const filteredDishes = computed(() => {
-    return dishes.value.filter(dish =>
-        dish.name.toLowerCase().includes(filter.value.toLowerCase()) ||
-        dish.description.toLowerCase().includes(filter.value.toLowerCase())
-    );
-});
 
-watch(() => props.dishes, (newDishes) => {
-    console.log(newDishes);
-    dishes.value = newDishes;
-});
+})
+
+
+
+
 </script>
