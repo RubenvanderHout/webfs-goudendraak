@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dish;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DishController extends Controller
@@ -22,7 +23,8 @@ class DishController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('dishes.create',compact('categories'));
     }
 
     /**
