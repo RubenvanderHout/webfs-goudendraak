@@ -1,5 +1,6 @@
 <template>
     <h1> Gouden draak </h1>
+    
 </template>
 
 
