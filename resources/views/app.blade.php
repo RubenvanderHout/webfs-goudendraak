@@ -12,7 +12,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         @vite('resources/js/app.js')
     </head>
-    <body>
-        {{$slot}}
+    <body class="container mx-auto">
+        @yield('content')
     </body>
 </html>

@@ -14,7 +14,6 @@ class DishController extends Controller
     public function index()
     {
         $dishes = Dish::all();
-        // return $dishes;
         return view('dishes.index',compact('dishes'));
     }
 
@@ -32,7 +31,21 @@ class DishController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request()->validate([
+            'id'=>['required'],
+            'name'=>['required','min:2','max:255'],
+            'description'=>['max:255'],
+            'price'=>['required','decimal:2'],
+            'category_id'=>['required']
+        ]);
+        Dish::create([
+            'id'=>request('id'),
+            'name'=>request('name'),
+            'description'=>request(('description')),
+            'price'=>request('price'),
+            'category_id'=>request('category')
+        ]);
+        return redirect('dishes.index');
     }
 
     /**
@@ -41,7 +54,8 @@ class DishController extends Controller
     public function show(string $id)
     {
         $dish = Dish::find($id);
-        return view('dishes.show',compact('dish'));
+        $category = Category::find($dish->category_id);
+        return view('dishes.show',compact('dish','category'));
     }
 
     /**
@@ -49,7 +63,9 @@ class DishController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dish = Dish::find($id);
+        $categories = Category::all();
+        return view('dishes.edit',compact('dish','categories'));
     }
 
     /**
