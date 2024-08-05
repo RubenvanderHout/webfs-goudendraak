@@ -10,11 +10,16 @@ class DishController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dishes = Dish::all();
-        // return $dishes;
-        return view('dishes.index',compact('dishes'));
+        $search = $request->input('search');
+
+        $dishItems = Dish::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->get();
     }
 
     /**
@@ -22,7 +27,7 @@ class DishController extends Controller
      */
     public function create()
     {
-        //
+       //
     }
 
     /**
