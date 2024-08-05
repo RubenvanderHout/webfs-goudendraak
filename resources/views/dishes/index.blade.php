@@ -6,7 +6,7 @@
             <th scope="col" class="px-6 py-3">Nummer</th>
             <th scope="col" class="px-6 py-3">Naam</th>
             <th scope="col" class="px-6 py-3">Prijs</th>
-            <th scope="col" class="px-6 py-3"><a class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" href="/dishes/create">Create</a></th></tr>
+            <th scope="col" class="px-6 py-3"><a href="/dishes/create"><button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 focus:outline-none" type="button">Create</button></a></th></tr>
     </thead>
     <tbody>
     @foreach($dishes as $dish)
@@ -14,7 +14,7 @@
         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{$dish->id}}</td>
         <td class="px-6 py-4">{{$dish->name}}</td>
         <td class="px-6 py-4 ">€{{$dish->price}}</td>
-        <td class="px-6 py-4"><a class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" href="/dishes/{{$dish->id}}">View </a></td>
+        <td class="px-6 py-4"><a  href="/dishes/{{$dish->id}}"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" type="button">View</button></a></td>
     </tr>
     @endforeach
     </tbody>

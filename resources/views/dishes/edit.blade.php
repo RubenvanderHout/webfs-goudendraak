@@ -1,6 +1,7 @@
 @extends('app')
 @section('content')
-<form method="patch" action="/dishes/{{$dish->id}}">
+<form method="POST" action="/dishes/{{$dish->id}}">
+    @method('PATCH')
   @csrf
   <div class="space-y-12">
     <div class="border-b border-gray-900/10 pb-12">
@@ -64,10 +65,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="mt-2 flex items-center justify-end gap-x-6">
-    <a href="/dishes/{{$dish->id}}"><button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button></a>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
-  </div>
+    </div>
+    <div class="mt-2 flex items-center justify-between gap-x-6">
+        <div>
+             <button type="submit" form="delete-form" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button> 
+        </div>
+        <div class="flex items-center gap-x-6">
+            <a href="/dishes/{{$dish->id}}"><button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button></a>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
+        </div>
+    </div>
+</form>
+<form id="delete-form" method="post"action="/dishes/{{$dish->id}}" class="hidden">
+    @method('delete')
+    @csrf
 </form>
 @endsection

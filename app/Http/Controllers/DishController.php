@@ -96,7 +96,7 @@ class DishController extends Controller
      */
     public function destroy(string $id)
     {
-        Dish::finOrFail($id)->delete();
-        return redirect('dishes.index');
+        Dish::findOrFail($id)->delete();
+        return redirect('dishes');
     }
 }
