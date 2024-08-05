@@ -32,7 +32,7 @@ class DishController extends Controller
     public function store(Request $request)
     {
         $request()->validate([
-            'id'=>['required'],
+            'id'=>['required','unique:dish'],
             'name'=>['required','min:2','max:255'],
             'description'=>['max:255'],
             'price'=>['required','decimal:2'],
@@ -73,7 +73,22 @@ class DishController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request()->validate([
+            'id'=>['required','unique:dish'],
+            'name'=>['required','min:2','max:255'],
+            'description'=>['max:255'],
+            'price'=>['required','decimal:2'],
+            'category_id'=>['required']
+        ]);
+        $dish = Dish::findOrFail($id);
+        $dish->update([
+            'id'=>request('id'),
+            'name'=>request('name'),
+            'description'=>request(('description')),
+            'price'=>request('price'),
+            'category_id'=>request('category')
+        ]);
+        return redirect('dishes.show'.$dish->id);
     }
 
     /**
@@ -81,6 +96,7 @@ class DishController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Dish::finOrFail($id)->delete();
+        return redirect('dishes.index');
     }
 }
