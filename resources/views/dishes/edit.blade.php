@@ -14,7 +14,7 @@
           <label for="id" class="block text-sm font-medium leading-6 text-gray-900">Number</label>
           <div class="mt-2">
             <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <input type="text" name="id" id="id" value="{{$dish->name}}" autocomplete="id" placeholder="17b" class="block flex-1 border-0 bg-transparent p-2.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >
+              <input type="text" name="id" id="id" value="{{$dish->id}}" autocomplete="id" placeholder="17b" class="block flex-1 border-0 bg-transparent p-2.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >
             </div>
             @error('id')
             <p class="text-xs text-red-900 font-semibold mt-1">{{$message}}</p>

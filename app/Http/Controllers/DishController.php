@@ -31,21 +31,22 @@ class DishController extends Controller
      */
     public function store(Request $request)
     {
-        $request()->validate([
-            'id'=>['required','unique:dish'],
+        $request->validate([
+            'id'=>['required','unique:dishes'],
             'name'=>['required','min:2','max:255'],
             'description'=>['max:255'],
             'price'=>['required','decimal:2'],
-            'category_id'=>['required']
+            'category'=>['required']
         ]);
+        
         Dish::create([
-            'id'=>request('id'),
-            'name'=>request('name'),
-            'description'=>request(('description')),
-            'price'=>request('price'),
-            'category_id'=>request('category')
+            'id'=>$request->id,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'category_id'=>$request->category
         ]);
-        return redirect('dishes.index');
+        return redirect('dishes');
     }
 
     /**
@@ -73,22 +74,23 @@ class DishController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request()->validate([
-            'id'=>['required','unique:dish'],
+        $request->validate([
+            'id'=>['required'],
             'name'=>['required','min:2','max:255'],
             'description'=>['max:255'],
             'price'=>['required','decimal:2'],
-            'category_id'=>['required']
+            'category'=>['required']
         ]);
         $dish = Dish::findOrFail($id);
+
         $dish->update([
-            'id'=>request('id'),
-            'name'=>request('name'),
-            'description'=>request(('description')),
-            'price'=>request('price'),
-            'category_id'=>request('category')
+            'id'=>$request->id,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'category_id'=>$request->category
         ]);
-        return redirect('dishes.show'.$dish->id);
+        return redirect('dishes/'.$dish->id);
     }
 
     /**
