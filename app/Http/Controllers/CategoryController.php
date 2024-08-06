@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -29,7 +29,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>['required','unique:category'],
+        ]);
+        Category::create([
+            'name'=>$request->name,
+        ]);
+        return redirect('categories');
     }
 
     /**
@@ -37,7 +43,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('categories.show',compact('category'));
     }
 
     /**
@@ -45,7 +52,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('categories.edit',compact('category'));
     }
 
     /**
@@ -53,7 +61,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name'=>['required','unique:category'],
+        ]);
+        $category = Category::findOrFail($id);
+        $category->update([
+            'name'=>$request->name,
+        ]);
+        return redirect('categories/'.$category->id);
     }
 
     /**
@@ -61,6 +76,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::findOrFail($id)->delete();
+        return redirect('categories');
     }
 }
