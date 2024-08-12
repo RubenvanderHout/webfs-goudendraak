@@ -1,1 +1,3 @@
-hi
+@extends('app')
+@section('content')
+@endsection

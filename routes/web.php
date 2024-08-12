@@ -6,9 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 Route::resource('orders',OrderController::class);
 Route::resource('dishes', DishController::class);
 Route::resource('categories', CategoryController::class);
