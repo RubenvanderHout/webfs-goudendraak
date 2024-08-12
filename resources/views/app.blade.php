@@ -14,8 +14,8 @@
 
     </head>
     <body class="h-full">
+    <nav class="bg-gray-800">
         <div class="min-h-full">
-        <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -24,7 +24,7 @@
                         <img class="h-8 w-auto" src="{{ asset('img/dragon-small.png') }}" alt="The Golden Dragon">
                         </a>  
                     </div>
-                    <div class="hidden sm:ml-6 sm:block">
+                    <div class="sm:ml-6 sm:block">
                         <div class="flex ml-10 space-x-4">
                             <x-nav-link href="/orders" :active="request()->is('orders')">Bestellen</x-nav-link>
                             <x-nav-link href="/dishes" :active="request()->is('dishes')">Menu</x-nav-link>
@@ -36,6 +36,8 @@
         </div>
     </nav>
     </div>
+    <div class="container mx-auto">
         @yield('content')
+        </div>
     </body>
 </html>

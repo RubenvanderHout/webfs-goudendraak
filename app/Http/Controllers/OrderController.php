@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Dish;
 use Illuminate\Http\Request;
 use App\Models\Order;
 
@@ -12,8 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-        return view('order.index',compact('orders'));
+        $categories = Category::all();
+        $dishes = Dish::all();
+        return view('order.index',compact('dishes','categories'));
     }
 
     /**
