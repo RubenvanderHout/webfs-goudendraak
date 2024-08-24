@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     @foreach($dishes as $dish)
-    <tr class="bg-white border-b  hover:bg-gray-50">
+    <tr class="bg-white border-b hover:bg-gray-50">
         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{$dish->id}}</td>
         <td class="px-6 py-4">{{$dish->name}}</td>
         <td class="px-6 py-4 ">€{{$dish->price}}</td>

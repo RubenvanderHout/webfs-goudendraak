@@ -6,65 +6,117 @@ use App\Models\Category;
 use App\Models\Dish;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Order_Dish;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        $dishes = Dish::all();
-        return view('order.index',compact('dishes','categories'));
+        $categories = Category::with('dishes')->get();
+        return view('order.index',compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function addToOrder(Request $request)
     {
-        return view('order.create');
+        $item = $request->only('id', 'name', 'price', 'quantity');
+
+        // Retrieve the current order or create a new one
+        $order = session()->get('order', []);
+
+        // If the item exists, update the quantity
+        if (isset($order[$item['id']])) {
+            $order[$item['id']]['quantity'] += $item['quantity'];
+        } else {
+            // Add new item to the order
+            $order[$item['id']] = $item;
+        }
+
+        // Store the order in session
+        session()->put('order', $order);
+
+        return redirect()->route('order.view')->with('success', 'Item added to order.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // View the order
+    public function viewOrder()
+    {
+        // Get the order from session
+        $order = session()->get('order', []);
+
+        // Return order view
+        $categories = Category::with('dishes')->get();
+        return view('order.show', compact('order','categories'));
+    }
+
+    // Update order item quantities
+    public function updateOrder(Request $request)
+    {
+        $order = session()->get('order', []);
+
+        // Update the quantity of the specific item
+        $order[$request->id]['quantity'] = $request->quantity;
+
+        // Save the updated order in the session
+        session()->put('order', $order);
+
+        return redirect()->route('order.view')->with('success', 'Order updated successfully.');
+    }
+
+    // Remove item from the order
+    public function removeFromOrder(Request $request)
+    {
+        $order = session()->get('order', []);
+
+        // Remove the item from the order
+        unset($order[$request->id]);
+
+        // Save the updated order
+        session()->put('order', $order);
+
+        return redirect()->route('order.view')->with('success', 'Item removed from order.');
+    }
+    //store the order
     public function store(Request $request)
     {
-        //
-    }
+        // Get the order items (this could be from session, or a Cart model/service)
+        $order = session()->get('order', []);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if (empty($order)) {
+            return redirect()->back()->with('error', 'Your order is empty!');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Create a new order
+        $order = Order::create([
+            'user_id' => Auth::id(), // Assuming user is logged in
+            'total_price' => $this->calculateTotal($order),
+            'status' => 'pending',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Create order items
+        foreach ($order as $item) {
+            Order_Dish::create([
+                'order_id' => $order->id,
+                'dish_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+        // Clear the order
+        session()->forget('order');
+
+        // Redirect with a success message
+        return redirect()->route('order.index')->with('success', 'Order placed successfully!');
+    }
+    private function calculateTotal($order)
     {
-        //
+        return collect($order)->sum(function($item) {
+            return $item['price'] * $item['quantity'];
+        });
     }
 }
 
