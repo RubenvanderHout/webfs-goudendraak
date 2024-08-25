@@ -1,0 +1,17 @@
+services:
+  db-goudendraak-dev:
+    image: mysql:8.3.0
+    restart: always
+    container_name: db-goudendraak-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: goudendraak
+      MYSQL_USER: user
+      MYSQL_PASSWORD: magicman
+    volumes:
+      -  db-goudendraak-data-dev:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  db-goudendraak-data-dev:
