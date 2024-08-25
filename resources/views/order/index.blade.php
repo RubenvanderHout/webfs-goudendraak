@@ -45,6 +45,8 @@
                   <input type="hidden" name="price" value="{{ $dish->price }}">
                   <label for="quantity">Quantity</label>
                   <input type="number" name="quantity" value="1" min="1" class="form-control mb-2">
+                  <label for="remark" >Remark</label>
+                  <input type="text" name="remark" placeholder="Add a remark (optional)" class="form-control mb-2">
                   <button type="submit" class="btn btn-primary">Add to Order</button>
                </form>
             </div>

@@ -8,10 +8,17 @@ use Illuminate\Http\Request;
 
 class DishController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
+    {
+        return view('dishes.index');
+    }
+
+
+    public function getDishes(Request $request)
     {
         $search = $request->input('search');
 
@@ -22,10 +29,10 @@ class DishController extends Controller
             })
             ->get(['id', 'category_id', 'description', 'name']);
 
-        dd(json_encode($dishItems));
-
         return response()->json($dishItems);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

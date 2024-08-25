@@ -2,17 +2,23 @@
     <div>
         <h1 class="text-2xl font-bold mb-4">Dishes</h1>
         <input type="text" v-model="search" placeholder="Search dishes..." class="mb-4 p-2 border rounded" />
-        <table class="min-w-full bg-white">
-            <thead>
+
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                 <tr>
-                    <th class="py-2">Name</th>
-                    <th class="py-2">Description</th>
+                    <th scope="col" class="px-6 py-3">Nummer</th>
+                    <th scope="col" class="px-6 py-3">Naam</th>
+                    <th scope="col" class="px-6 py-3">Prijs</th>
+                    <th scope="col" class="px-6 py-3"><a href="/dishes/create"><button
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 focus:outline-none"
+                                type="button">Create</button></a></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="dish in filteredDishes">
                     <td class="py-2">{{ dish.name }}</td>
                     <td class="py-2">{{ dish.description }}</td>
+                    <td class="py-2">{{ dish.id }}</td>
                 </tr>
             </tbody>
         </table>

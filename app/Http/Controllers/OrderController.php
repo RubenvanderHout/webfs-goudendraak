@@ -7,6 +7,7 @@ use App\Models\Dish;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Order_Dish;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -19,10 +20,10 @@ class OrderController extends Controller
         return view('order.index',compact('categories'));
     }
 
-    
+
     public function addToOrder(Request $request)
     {
-        $item = $request->only('id', 'name', 'price', 'quantity');
+        $item = $request->only('id', 'name', 'price', 'quantity', 'remark');
 
         // Retrieve the current order or create a new one
         $order = session()->get('order', []);
@@ -30,10 +31,15 @@ class OrderController extends Controller
         // If the item exists, update the quantity
         if (isset($order[$item['id']])) {
             $order[$item['id']]['quantity'] += $item['quantity'];
+
+
         } else {
             // Add new item to the order
             $order[$item['id']] = $item;
         }
+
+
+
 
         // Store the order in session
         session()->put('order', $order);
@@ -55,10 +61,17 @@ class OrderController extends Controller
     // Update order item quantities
     public function updateOrder(Request $request)
     {
+        $request->validate([
+            'id' => 'required|exists:orders,id',
+            'quantity' => 'required|integer|min:1',
+            'remark' => 'nullable|string|max:255', // Validation rule for remark
+        ]);
+
         $order = session()->get('order', []);
 
-        // Update the quantity of the specific item
+        // Update the quantity and remark of the specific item
         $order[$request->id]['quantity'] = $request->quantity;
+        $order[$request->id]['remark'] = $request->remark ?? null; // Handle nullable remark
 
         // Save the updated order in the session
         session()->put('order', $order);
@@ -102,6 +115,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'dish_id' => $item['id'],
                 'quantity' => $item['quantity'],
+                'remark' => $item['remark'],
                 'price' => $item['price'],
             ]);
         }
@@ -119,4 +133,3 @@ class OrderController extends Controller
         });
     }
 }
-
