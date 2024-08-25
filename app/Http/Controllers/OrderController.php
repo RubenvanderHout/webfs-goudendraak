@@ -17,10 +17,10 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $categories = Category::with('dishes')->get();
-        return view('order.index',compact('categories'));
+        return view('order.index', compact('categories'));
     }
 
-    
+
     public function addToOrder(Request $request)
     {
         $item = $request->only('id', 'name', 'price', 'quantity');
@@ -50,7 +50,7 @@ class OrderController extends Controller
 
         // Return order view
         $categories = Category::with('dishes')->get();
-        return view('order.show', compact('order','categories'));
+        return view('order.show', compact('order', 'categories'));
     }
 
     // Update order item quantities
@@ -92,7 +92,7 @@ class OrderController extends Controller
 
         // Create a new order
         $orderdb = Order::create([
-            'table_id' => 1, 
+            'table_id' => 1,
         ]);
 
         // Create order items
@@ -106,9 +106,9 @@ class OrderController extends Controller
             $dishIds[] = $item['id'];
         }
         $qrdata = [
-            'order_id'=>$orderdb->id,
-            'dish_ids'=>implode(',',$dishIds),
-            'customer_name'=>$request->name
+            'order_id' => $orderdb->id,
+            'dish_ids' => implode(',', $dishIds),
+            'customer_name' => $request->name
         ];
         $qrCode = QrCode::size(200)->generate(json_encode($qrdata));
 
@@ -116,7 +116,6 @@ class OrderController extends Controller
         session()->forget('order');
 
         // Redirect with a success message
-        return view('order.qr',compact('qrCode'));
+        return view('order.qr', compact('qrCode'));
     }
 }
-

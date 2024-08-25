@@ -4,10 +4,15 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 Route::get('/orders',[OrderController::class,'index'])->name('orders.index');
+Route::get('/restaurant',[RestaurantController::class,'index'])->name('restaurant.index');
+Route::get('/table/{id}',[RestaurantController::class,'show'])->name('restaurant.show');
+Route::resource('customers',CustomerController::class);
 Route::resource('dishes', DishController::class);
 Route::resource('categories', CategoryController::class);
 Route::get('/menu/pdf', [MenuController::class, 'exportToPDF'])->name('menu.pdf');

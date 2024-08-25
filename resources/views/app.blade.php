@@ -32,6 +32,7 @@
                                 <x-nav-link href="/orders" :active="request()->is('orders')">Bestellen</x-nav-link>
                                 <x-nav-link href="/dishes" :active="request()->is('dishes')">Menu</x-nav-link>
                                 <x-nav-link href="/categories" :active="request()->is('categories')">Categoriën</x-nav-link>
+                                <x-nav-link href="/restaurant" :active="request()->is('restaurant')">Restaurant</x-nav-link>
                             </div>
                         </div>
                     </div>
