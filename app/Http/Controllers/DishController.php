@@ -8,14 +8,31 @@ use Illuminate\Http\Request;
 
 class DishController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dishes = Dish::all();
-        return view('dishes.index',compact('dishes'));
+        return view('dishes.index');
     }
+
+
+    public function getDishes(Request $request)
+    {
+        $search = $request->input('search');
+
+        $dishItems = Dish::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->get(['id', 'category_id', 'description', 'name']);
+
+        return response()->json($dishItems);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +55,7 @@ class DishController extends Controller
             'price'=>['required','decimal:2'],
             'category'=>['required']
         ]);
-        
+
         Dish::create([
             'id'=>$request->id,
             'name'=>$request->name,
