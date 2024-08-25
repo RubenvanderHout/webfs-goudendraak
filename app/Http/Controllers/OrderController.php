@@ -90,16 +90,14 @@ class OrderController extends Controller
         }
 
         // Create a new order
-        $order = Order::create([
-            'user_id' => Auth::id(), // Assuming user is logged in
-            'total_price' => $this->calculateTotal($order),
-            'status' => 'pending',
+        $orderdb = Order::create([
+            'table_id' => 1, 
         ]);
 
         // Create order items
         foreach ($order as $item) {
             Order_Dish::create([
-                'order_id' => $order->id,
+                'order_id' => $orderdb->id,
                 'dish_id' => $item['id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
@@ -110,13 +108,7 @@ class OrderController extends Controller
         session()->forget('order');
 
         // Redirect with a success message
-        return redirect()->route('order.index')->with('success', 'Order placed successfully!');
-    }
-    private function calculateTotal($order)
-    {
-        return collect($order)->sum(function($item) {
-            return $item['price'] * $item['quantity'];
-        });
+        return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
     }
 }
 
