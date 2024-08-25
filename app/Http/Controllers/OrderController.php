@@ -39,7 +39,7 @@ class OrderController extends Controller
         // Store the order in session
         session()->put('order', $order);
 
-        return redirect()->route('order.view')->with('success', 'Item added to order.');
+        return redirect()->route('orders.index')->with('success', 'Item added to order.');
     }
 
     // View the order
