@@ -32,7 +32,6 @@ class OrderController extends Controller
         // If the item exists, update the quantity
         if (isset($order[$item['id']])) {
             $order[$item['id']]['quantity'] += $item['quantity'];
-            $order[$item['id']]['remark'] += $item['remark'];
 
         } else {
             // Add new item to the order

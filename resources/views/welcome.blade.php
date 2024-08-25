@@ -6,7 +6,4 @@
     <p>This is the homepage.</p>
 </div>
 
-
-<search-component></search-component>
-
 @endsection
