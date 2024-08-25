@@ -14,4 +14,7 @@ class Dish extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+    public function orderdishes(){
+        return $this->hasMany(Order_Dish::class);
+    }
 }

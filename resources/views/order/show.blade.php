@@ -4,19 +4,18 @@
 
 @if (session('success'))
 <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
-  <span class="font-medium">Success alert!</span> {{ session('success') }}
+    <span class="font-medium">Success alert!</span> {{ session('success') }}
 </div>
 @endif
 
 @if (count($order) > 0)
-<table class="w-full rtl:text-right text-gray-500">
+<table class="w-full text-gray-500">
     <thead class="text-gray-700 bg-gray-50 ">
         <tr>
             <th scope="col" class="px-6 py-3">Name</th>
             <th scope="col" class="px-6 py-3">Quantity</th>
             <th scope="col" class="px-6 py-3">Remark</th>
             <th scope="col" class="px-6 py-3">Price</th>
-            <th scope="col" class="px-6 py-3">Total</th>
             <th scope="col" class="px-6 py-3">Actions</th>
         </tr>
     </thead>
@@ -39,7 +38,6 @@
             </td>
 
             <td class="px-6 py-4">€ {{ number_format($item['price'], 2) }}</td>
-            <td class="px-6 py-4">€ {{ number_format($item['price'] * $item['quantity'], 2) }}</td>
             <td class="px-6 py-4">
                 <form action="{{ route('order.remove') }}" method="POST">
                     @csrf
@@ -58,6 +56,8 @@
 <div class="flex justify-end mt-6">
     <form action="{{ route('order.store') }}" method="POST">
         @csrf
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name:</label>
+        <input type="text" id="name" name="name" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
             Save Order
         </button>

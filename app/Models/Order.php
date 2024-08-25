@@ -9,6 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['table_id'];
     public function Table(){
         return $this->belongsTo(Table::class);
     }

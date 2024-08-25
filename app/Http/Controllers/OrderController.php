@@ -7,6 +7,7 @@ use App\Models\Dish;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Order_Dish;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -17,7 +18,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $categories = Category::with('dishes')->get();
-        return view('order.index',compact('categories'));
+        return view('order.index', compact('categories'));
     }
 
 
@@ -44,7 +45,7 @@ class OrderController extends Controller
         // Store the order in session
         session()->put('order', $order);
 
-        return redirect()->route('order.view')->with('success', 'Item added to order.');
+        return redirect()->route('orders.index')->with('success', 'Item added to order.');
     }
 
     // View the order
@@ -55,7 +56,7 @@ class OrderController extends Controller
 
         // Return order view
         $categories = Category::with('dishes')->get();
-        return view('order.show', compact('order','categories'));
+        return view('order.show', compact('order', 'categories'));
     }
 
     // Update order item quantities
@@ -103,33 +104,32 @@ class OrderController extends Controller
         }
 
         // Create a new order
-        $order = Order::create([
-            'user_id' => Auth::id(), // Assuming user is logged in
-            'total_price' => $this->calculateTotal($order),
-            'status' => 'pending',
+        $orderdb = Order::create([
+            'table_id' => 1,
         ]);
 
         // Create order items
         foreach ($order as $item) {
             Order_Dish::create([
-                'order_id' => $order->id,
+                'order_id' => $orderdb->id,
                 'dish_id' => $item['id'],
                 'quantity' => $item['quantity'],
                 'remark' => $item['remark'],
                 'price' => $item['price'],
             ]);
+            $dishIds[] = $item['id'];
         }
+        $qrdata = [
+            'order_id' => $orderdb->id,
+            'dish_ids' => implode(',', $dishIds),
+            'customer_name' => $request->name
+        ];
+        $qrCode = QrCode::size(200)->generate(json_encode($qrdata));
 
         // Clear the order
         session()->forget('order');
 
         // Redirect with a success message
-        return redirect()->route('order.index')->with('success', 'Order placed successfully!');
-    }
-    private function calculateTotal($order)
-    {
-        return collect($order)->sum(function($item) {
-            return $item['price'] * $item['quantity'];
-        });
+        return view('order.qr', compact('qrCode'));
     }
 }
