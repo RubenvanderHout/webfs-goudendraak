@@ -31,7 +31,7 @@ class OrderController extends Controller
         // If the item exists, update the quantity
         if (isset($order[$item['id']])) {
             $order[$item['id']]['quantity'] += $item['quantity'];
-
+            $order[$item['id']]['remark'] += $item['remark'];
 
         } else {
             // Add new item to the order
@@ -71,7 +71,7 @@ class OrderController extends Controller
 
         // Update the quantity and remark of the specific item
         $order[$request->id]['quantity'] = $request->quantity;
-        $order[$request->id]['remark'] = $request->remark ?? null; // Handle nullable remark
+        $order[$request->id]['remark'] = $request->remark;
 
         // Save the updated order in the session
         session()->put('order', $order);
