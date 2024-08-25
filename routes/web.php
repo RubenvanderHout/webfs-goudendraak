@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 Route::get('/orders',[OrderController::class,'index'])->name('orders.index');
+
+Route::get('/getdishes', [DishController::class, 'getDishes']);
 Route::resource('dishes', DishController::class);
 Route::resource('categories', CategoryController::class);
 Route::get('/menu/pdf', [MenuController::class, 'exportToPDF'])->name('menu.pdf');

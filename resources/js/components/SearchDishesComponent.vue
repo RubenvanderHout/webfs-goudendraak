@@ -15,10 +15,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="dish in filteredDishes">
-                    <td class="py-2">{{ dish.name }}</td>
-                    <td class="py-2">{{ dish.description }}</td>
-                    <td class="py-2">{{ dish.id }}</td>
+                <tr v-for="dish in filteredDishes" class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.name }}</td>
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.description }}</td>
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.id }}</td>
                 </tr>
             </tbody>
         </table>
@@ -35,7 +35,7 @@ const dishes = ref<DishItem[]>([]);
 
 const fetchDishes = async (searchItem: string = '') => {
     try {
-        const response = await fetch(`/dishes?search=${encodeURIComponent(searchItem)}`);
+        const response = await fetch(`/getdishes/?search=${encodeURIComponent(searchItem)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
