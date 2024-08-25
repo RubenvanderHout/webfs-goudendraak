@@ -25,7 +25,7 @@
     </tbody>
 </table>
 <div class="flex justify-end mt-6">
-    <a href="/receipt/{{$table->id}}">
+    <a href="/receipt/{{$table->id}}/pdf">
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
             Print bon
         </button>
