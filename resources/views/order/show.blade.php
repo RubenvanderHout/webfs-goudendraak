@@ -14,6 +14,7 @@
         <tr>
             <th scope="col" class="px-6 py-3">Name</th>
             <th scope="col" class="px-6 py-3">Quantity</th>
+            <th scope="col" class="px-6 py-3">Remark</th>
             <th scope="col" class="px-6 py-3">Price</th>
             <th scope="col" class="px-6 py-3">Total</th>
             <th scope="col" class="px-6 py-3">Actions</th>
@@ -28,9 +29,15 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $item['id'] }}">
                     <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1">
+
+                    <input type="hidden" name="id" value="{{ $item['id'] }}">
+                    <input type="text" name="remark" value="{{ $item['remark'] ?? '' }}" placeholder="Add a remark (optional)">
+
                     <button type="submit" class="text-white bg-yellow-700 focus:ring-4 hover:bg-yellow-500 rounded-lg px-5 py-2.5 me-2 mb-2">Update</button>
+
                 </form>
             </td>
+
             <td class="px-6 py-4">€ {{ number_format($item['price'], 2) }}</td>
             <td class="px-6 py-4">€ {{ number_format($item['price'] * $item['quantity'], 2) }}</td>
             <td class="px-6 py-4">

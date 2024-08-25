@@ -1,4 +1,12 @@
 @extends('app')
+
 @section('content')
-Home
+<div>
+    <h1>Welcome to The Golden Dragon</h1>
+    <p>This is the homepage.</p>
+</div>
+
+
+<search-component></search-component>
+
 @endsection
