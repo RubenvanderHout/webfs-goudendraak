@@ -1,5 +1,7 @@
 export interface DishItem {
-    id : number;
+    id : string;
+    category_id : number;
     name : string;
     description : string;
+    price : number;
 }

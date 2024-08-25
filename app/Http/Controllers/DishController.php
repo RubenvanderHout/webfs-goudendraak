@@ -17,9 +17,13 @@ class DishController extends Controller
         $dishItems = Dish::query()
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%");
             })
-            ->get();
+            ->get(['id', 'category_id', 'description', 'name']);
+
+        dd(json_encode($dishItems));
+
+        return response()->json($dishItems);
     }
 
     /**

@@ -10,7 +10,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="dish in dishes" :key="dish.id">
+                <tr v-for="dish in filteredDishes">
                     <td class="py-2">{{ dish.name }}</td>
                     <td class="py-2">{{ dish.description }}</td>
                 </tr>
@@ -20,39 +20,42 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { DishItem } from '@/models/dish';
+import debounce from 'lodash/debounce';
 
-interface Props {
-    dishes: DishItem[]
-    search: string | null,
-}
+const search = ref("");
+const dishes = ref<DishItem[]>([]);
 
-
-const props = withDefaults(
-    defineProps<Props>(),
-    {
-        dishes: () => [],
-        search: ""
+const fetchDishes = async (searchItem: string = '') => {
+    try {
+        const response = await fetch(`/dishes?search=${encodeURIComponent(searchItem)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log(`before update dishes: ${JSON.stringify(dishes.value)}`);
+        dishes.value = [...data.map((dish: DishItem) => ({
+            ...dish,
+            name: dish.name.toLowerCase(),
+        }))];
+        console.log(`after update dishes: ${JSON.stringify(dishes.value)}`);
+    } catch (error) {
+        console.error('Error fetching dishes:', error);
     }
-);
+};
 
-const search = ref(props.search);
-const dishes = ref(props.dishes)
+const debouncedFetchDishes = debounce(fetchDishes, 500);
 
 watch(search, (searchItem) => {
-    // .get("/dishes", { search: searchItem }, {
-    //     preserveState: true,
-    //     replace: true,
-    //     only: ['dishes'],
-    // });
+    debouncedFetchDishes(searchItem);
+});
+
+onMounted(() => {
+    fetchDishes();
 });
 
 const filteredDishes = computed(() => {
-
-})
-
-
-
-
+    return dishes.value;
+});
 </script>
