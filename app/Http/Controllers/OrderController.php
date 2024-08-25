@@ -7,6 +7,7 @@ use App\Models\Dish;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Order_Dish;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends Controller
 {
@@ -102,13 +103,20 @@ class OrderController extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
+            $dishIds[] = $item['id'];
         }
+        $qrdata = [
+            'order_id'=>$orderdb->id,
+            'dish_ids'=>implode(',',$dishIds),
+            'customer_name'=>$request->name
+        ];
+        $qrCode = QrCode::size(200)->generate(json_encode($qrdata));
 
         // Clear the order
         session()->forget('order');
 
         // Redirect with a success message
-        return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
+        return view('order.qr',compact('qrCode'));
     }
 }
 
