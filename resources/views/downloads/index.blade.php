@@ -7,12 +7,11 @@
 </head>
 <body>
     <h1>Download Daily Order Exports</h1>
-
     <ul>
         @foreach ($files as $file)
             <li>
                 <a href="{{ route('downloads.download', $file) }}">
-                    {{ basename($file) }}
+                    {{ $file }}
                 </a>
             </li>
         @endforeach

@@ -7,18 +7,18 @@ class OrderExportController extends Controller
 {
     public function index()
     {
-        // Get all files from the 'public/orders' directory
         $files = Storage::disk('public')->files('orders');
-
-        // Pass the files to the view
+        $files = array_map(function ($file) {
+            return basename($file);
+        }, $files);
         return view('downloads.index', compact('files'));
     }
 
     public function download($file)
     {
         // Check if the file exists in the storage
-        if (Storage::disk('public')->exists($file)) {
-            return response()->download(storage_path('app/public/' . $file));
+        if (Storage::disk('public')->exists('orders/' . $file)) {
+            return response()->download(storage_path('app/public/orders/' . $file));
         }
 
         // If the file doesn't exist, show a 404 error

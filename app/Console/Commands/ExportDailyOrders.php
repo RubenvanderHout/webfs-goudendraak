@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Exports\OrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Contracts\Console\Isolatable;
 
-
-class ExportDailyOrders extends Command
+class ExportDailyOrders extends Command implements Isolatable
 {
 
     protected $signature = 'app:export-daily-orders';
