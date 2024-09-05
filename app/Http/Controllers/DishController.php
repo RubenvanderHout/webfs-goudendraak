@@ -27,7 +27,7 @@ class DishController extends Controller
                 return $query->where('name', 'like', "%{$search}%")
                 ->orWhere('description', 'like', "%{$search}%");
             })
-            ->get(['id', 'category_id', 'description', 'name']);
+            ->get(['id', 'category_id', 'description', 'name','price']);
 
         return response()->json($dishItems);
     }

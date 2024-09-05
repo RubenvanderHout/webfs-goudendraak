@@ -16,9 +16,10 @@
             </thead>
             <tbody>
                 <tr v-for="dish in filteredDishes" class="bg-white border-b hover:bg-gray-50">
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.name }}</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.description }}</td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.id }}</td>
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.name }}</td>
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ dish.price }}</td>
+                    <td class="px-6 py-4"><a  href="/dishes/{{ dish.id }}"><button class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" type="button">View</button></a></td>
                 </tr>
             </tbody>
         </table>

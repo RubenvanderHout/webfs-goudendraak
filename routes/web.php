@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderExportController; // Add this line
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+Route::view('/contact','contact');
 Route::get('/orders',[OrderController::class,'index'])->name('orders.index');
 Route::get('/restaurant',[RestaurantController::class,'index'])->name('restaurant.index');
 Route::get('/table/{id}',[RestaurantController::class,'show'])->name('restaurant.show');

@@ -38,9 +38,6 @@ class OrderController extends Controller
             $order[$item['id']] = $item;
         }
 
-
-
-
         // Store the order in session
         session()->put('order', $order);
 
