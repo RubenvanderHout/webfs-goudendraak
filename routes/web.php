@@ -6,8 +6,10 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\KassaController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\OrderExportController; // Add this line
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -20,6 +22,8 @@ Route::resource('customers',CustomerController::class);
 Route::get('/getdishes', [DishController::class, 'getDishes']);
 Route::resource('dishes', DishController::class);
 Route::resource('categories', CategoryController::class);
+Route::get('/kassa',[KassaController::class,'index']);
+Route::post('/login',[SessionController::class,'login']);
 Route::get('/menu/pdf', [MenuController::class, 'exportToPDF'])->name('menu.pdf');
 Route::post('/order/add', [OrderController::class, 'addToOrder'])->name('order.add');
 Route::get('/order', [OrderController::class, 'viewOrder'])->name('order.view');
