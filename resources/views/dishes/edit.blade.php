@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layout.app')
 @section('content')
 <form method="POST" action="/dishes/{{$dish->id}}">
     @method('PATCH')

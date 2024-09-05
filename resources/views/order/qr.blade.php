@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layout.app')
 @section('content')
 <div class="bg-gray-100 flex justify-center items-center min-h-screen">
     <div class="bg-white p-6 rounded-lg shadow-lg text-center">

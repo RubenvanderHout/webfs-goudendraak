@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layout.app')
 @section('content')
 <form method="POST" action="/categories/{{$category->id}}">
     @method('PATCH')

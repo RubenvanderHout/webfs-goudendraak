@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layout.app')
 @section('content')
 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">

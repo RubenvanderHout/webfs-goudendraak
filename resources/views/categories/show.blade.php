@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layout.app')
 @section('content')
 <div>
   <div class="px-4 sm:px-0 mt-10">
