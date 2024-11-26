@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -12,7 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dishes', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
+            $table->integer('menunumber')->nullable();
+            $table->tinyText('menu_addition')->nullable();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->text('description')->nullable();
             $table->string('name')->nullable();

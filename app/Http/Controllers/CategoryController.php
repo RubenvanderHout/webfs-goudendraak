@@ -30,7 +30,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>['required','unique:category'],
+            'name'=>['required','unique:categories'],
         ]);
         Category::create([
             'name'=>$request->name,
@@ -62,7 +62,7 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name'=>['required','unique:category'],
+            'name'=>['required','unique:categories'],
         ]);
         $category = Category::findOrFail($id);
         $category->update([

@@ -23,7 +23,7 @@ Route::get('/getdishes', [DishController::class, 'getDishes']);
 Route::resource('dishes', DishController::class);
 Route::resource('categories', CategoryController::class);
 Route::get('/kassa',[KassaController::class,'index']);
-Route::post('/login',[SessionController::class,'login']);
+Route::post('/login',[SessionController::class,'store']);
 Route::get('/menu/pdf', [MenuController::class, 'exportToPDF'])->name('menu.pdf');
 Route::post('/order/add', [OrderController::class, 'addToOrder'])->name('order.add');
 Route::get('/order', [OrderController::class, 'viewOrder'])->name('order.view');

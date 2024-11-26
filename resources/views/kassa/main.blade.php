@@ -1,9 +1,6 @@
-<?php
-    require('cashDesk.php');
-    require('menu.php');
-    require('sales.php');
-?>
-
+<!-- @include('kassa.cashDesk'); -->
+<!-- @include('kassa.menu'); -->
+<!-- @include('kassa.sales'); -->
 <!-- The Modal -->
 <div id="myModal" class="modal">
     <!-- Modal content -->

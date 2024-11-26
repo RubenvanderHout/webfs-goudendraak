@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class KassaController extends Controller
@@ -11,7 +11,8 @@ class KassaController extends Controller
      */
     public function index()
     {
-        return view('kassa.index');
+        $categories = Category::with('dishes')->get();
+        return view('kassa.index',compact('categories'));
     }
 
     /**

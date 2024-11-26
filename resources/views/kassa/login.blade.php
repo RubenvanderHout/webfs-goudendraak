@@ -1,7 +1,14 @@
 <div id="loginDiv">
     <form action="/login" method="POST">
-        <input type="number" name="employeeNr" required placeholder="Medewerker Nummer" min="1"><br>
+        @csrf
+        <input type="number" name="id" required placeholder="Medewerker Nummer" min="1"><br>
+        @error('id')
+            <p class="text-xs text-red-900 font-semibold mt-1">{{$message}}</p>
+            @enderror
         <input type="password" name="password" required placeholder="Wachtwoord"><br>
+        @error('password')
+            <p class="text-xs text-red-900 font-semibold mt-1">{{$message}}</p>
+            @enderror
         <input type="submit" value="inloggen"><br>
     </form>
 </div>

@@ -43,7 +43,7 @@
         <div class="sm:col-span-4">
           <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
           <div class="mt-2">
-              <input type="number"  class="border border-gray-300 text-sm rounded-lg sm:max-w-md focus:ring-blue-500 text-gray-900 shadow-sm focus:border-blue-500 block placeholder:text-gray-400 w-full p-2.5" step="0.01" min="1" name="price" id="price" placeholder="6,00" autocomplete="price">
+              <input type="number"  class="border border-gray-300 text-sm rounded-lg sm:max-w-md focus:ring-blue-500 text-gray-900 shadow-sm focus:border-blue-500 block placeholder:text-gray-400 w-full p-2.5" step="0.01" name="price" id="price" placeholder="6.00" autocomplete="price">
           </div>
           @error('price')
             <p class="text-xs text-red-900 font-semibold mt-1">{{$message}}</p>

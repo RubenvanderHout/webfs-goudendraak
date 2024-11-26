@@ -1,7 +1,7 @@
 <div id="cashDeskPage">
     <div id="cashDeskLeft">
         <div id="itemsToSelect">
-            <?php
+            <!-- <?php
                 $menuItems = array();
                 $menuItemsType = array();
 
@@ -84,7 +84,7 @@
                         echo("</table>");        
                     }
                 }
-            ?>
+            ?> -->
         </div>
     </div>
     <div id="cashDeskRight">
